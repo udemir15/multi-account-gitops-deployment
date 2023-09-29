@@ -29,6 +29,7 @@ jobs:
         with:
           node-version: "18"
           cache: yarn
+          working-directory: ./simple-api
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -67,6 +68,7 @@ jobs:
         with:
           node-version: "18"
           cache: yarn
+          working-directory: ./simple-api
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -112,6 +114,7 @@ jobs:
         with:
           node-version: "18"
           cache: yarn
+          working-directory: ./simple-api
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -157,6 +160,7 @@ jobs:
         with:
           node-version: "18"
           cache: yarn
+          working-directory: ./simple-api
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
