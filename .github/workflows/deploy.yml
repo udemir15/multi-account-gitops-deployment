@@ -37,7 +37,7 @@ jobs:
       - name: Build and test the project
         run: npx projen build
 
-  deploy-dev-vpc:
+  deploy-dev-simple-api:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -47,7 +47,7 @@ jobs:
     env:
       AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
       AWS_REGION: ${{ vars.AWS_REGION }}
-      APP_ENV: ${{ vars.APP_ENV }}
+      ENVIRONMENT: ${{ vars.ENVIRONMENT }}
     permissions:
       id-token: write
       contents: read
@@ -82,17 +82,17 @@ jobs:
       - name: Deploy the application
         run: npx projen deploy --all
 
-  deploy-test-vpc:
+  deploy-test-simple-api:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./simple-api
-    needs: deploy-dev-vpc
+    needs: deploy-dev-simple-api
     environment: test
     env:
       AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
       AWS_REGION: ${{ vars.AWS_REGION }}
-      APP_ENV: ${{ vars.APP_ENV }}
+      ENVIRONMENT: ${{ vars.ENVIRONMENT }}
     permissions:
       id-token: write
       contents: read
@@ -128,17 +128,17 @@ jobs:
       - name: Deploy the application
         run: npx projen deploy --all
 
-  deploy-prod-vpc:
+  deploy-prod-simple-api:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./simple-api
-    needs: deploy-test-vpc
+    needs: deploy-test-simple-api
     environment: prod
     env:
       AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
       AWS_REGION: ${{ vars.AWS_REGION }}
-      APP_ENV: ${{ vars.APP_ENV }}
+      ENVIRONMENT: ${{ vars.ENVIRONMENT }}
     permissions:
       id-token: write
       contents: read

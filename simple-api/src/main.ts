@@ -4,8 +4,8 @@ import { SimpleApiStack } from './simple_api_stack';
 
 // for development, use account/region from cdk cli
 const devEnv = {
-  account: process.env.CDK_DEFAULT_ACCOUNT,
-  region: process.env.CDK_DEFAULT_REGION,
+  account: process.env.AWS_ACCOUNT,
+  region: process.env.AWS_REGION,
 };
 
 const app = new App();
