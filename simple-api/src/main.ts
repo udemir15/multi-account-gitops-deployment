@@ -12,6 +12,9 @@ const app = new App();
 
 const environment = process.env.ENVIRONMENT || '';
 
-new SimpleApiStack(app, 'simple-api', { env: devEnv, environment: environment });
+new SimpleApiStack(app, `${environment}-simple-api`, {
+  env: devEnv,
+  environment: environment,
+});
 
 app.synth();
