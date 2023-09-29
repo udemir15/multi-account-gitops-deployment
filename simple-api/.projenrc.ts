@@ -1,4 +1,5 @@
 import { awscdk } from 'projen';
+import { ApprovalLevel } from 'projen/lib/awscdk';
 
 const project = new awscdk.AwsCdkTypeScriptApp({
   authorEmail: 'utku.demir@luminis.eu',
@@ -16,6 +17,7 @@ const project = new awscdk.AwsCdkTypeScriptApp({
     'Typescript',
     'Deployment',
   ],
+  requireApproval: ApprovalLevel.NEVER,
   gitignore: ['.idea'],
   license: 'MIT',
   licensed: true,
