@@ -10,7 +10,7 @@ const devEnv = {
 
 const app = new App();
 
-const environment = process.env.ENVIRONMENT || '';
+const environment = process.env.ENVIRONMENT || 'dev';
 
 new SimpleApiStack(app, `${environment}-simple-api`, {
   env: devEnv,
