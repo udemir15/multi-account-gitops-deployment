@@ -1,0 +1,171 @@
+# .github/workflows/deploy.yml
+name: deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./simple-api
+    steps:
+      - name: Pull repository
+        uses: actions/checkout@v3
+
+      - name: Setup Nodejs and npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Setup yarn
+        run: npm install -g yarn
+
+      - name: Setup Nodejs with yarn caching
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build and test the project
+        run: npx projen build
+
+  deploy-dev-vpc:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./simple-api
+    needs: build
+    environment: dev
+    env:
+      AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      APP_ENV: ${{ vars.APP_ENV }}
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Pull repository
+        uses: actions/checkout@v3
+
+      - name: Setup Nodejs and npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Setup yarn
+        run: npm install -g yarn
+
+      - name: Setup Nodejs with yarn caching
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Assume deploy role
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEPLOY_ROLE }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Deploy the application
+        run: npx projen deploy --all
+
+  deploy-test-vpc:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./simple-api
+    needs: deploy-dev-vpc
+    environment: test
+    env:
+      AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      APP_ENV: ${{ vars.APP_ENV }}
+    permissions:
+      id-token: write
+      contents: read
+      issues: write
+    steps:
+      - name: Pull repository
+        uses: actions/checkout@v3
+
+      - name: Setup Nodejs and npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Setup yarn
+        run: npm install -g yarn
+
+      - name: Setup Nodejs with yarn caching
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Assume deploy role
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEPLOY_ROLE }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Deploy the application
+        run: npx projen deploy --all
+
+  deploy-prod-vpc:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./simple-api
+    needs: deploy-test-vpc
+    environment: prod
+    env:
+      AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      APP_ENV: ${{ vars.APP_ENV }}
+    permissions:
+      id-token: write
+      contents: read
+      issues: write
+    steps:
+      - name: Pull repository
+        uses: actions/checkout@v3
+
+      - name: Setup Nodejs and npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Setup yarn
+        run: npm install -g yarn
+
+      - name: Setup Nodejs with yarn caching
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Assume deploy role
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.DEPLOY_ROLE }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Deploy the application
+        run: npx projen deploy --all
