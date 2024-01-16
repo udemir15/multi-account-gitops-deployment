@@ -6,9 +6,8 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   authorName: 'Utku Demir',
   cdkVersion: '2.96.2',
   defaultReleaseBranch: 'main',
-  name: 'actions-setup',
+  name: 'simple-api',
   description: 'A CDK project for Simple Api GitOps Deployments',
-  repository: 'https://github.com/udemir15/simple-api.git',
   github: false,
   projenrcTs: true,
   keywords: [
@@ -21,10 +20,5 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   gitignore: ['.idea'],
   license: 'MIT',
   licensed: true,
-
-  // deps: [], /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
 });
 project.synth();

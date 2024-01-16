@@ -145,7 +145,7 @@ jobs:
       issues: write
     steps:
       - name: Pull repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Nodejs and npm
         uses: actions/setup-node@v3

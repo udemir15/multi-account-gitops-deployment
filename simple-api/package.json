@@ -1,10 +1,6 @@
 {
-  "name": "actions-setup",
+  "name": "simple-api",
   "description": "A CDK project for Simple Api GitOps Deployments",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/udemir15/simple-api.git"
-  },
   "scripts": {
     "build": "npx projen build",
     "bundle": "npx projen bundle",

@@ -1,10 +1,6 @@
 {
   "name": "actions-setup",
   "description": "A CDK project for GitOps Deployments",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/udemir15/actions-setup.git"
-  },
   "scripts": {
     "build": "npx projen build",
     "bundle": "npx projen bundle",

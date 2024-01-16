@@ -1,10 +1,6 @@
 {
   "name": "organisational-setup",
   "description": "A CDK project for Organizational Account Deployments",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/udemir15/organisational-setup.git"
-  },
   "scripts": {
     "build": "npx projen build",
     "bundle": "npx projen bundle",
